@@ -44,7 +44,8 @@ jobs:
         run: dotnet build PublicServiceReportAPI/PublicServiceReportAPI.sln --configuration 		Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/publicreportingapi
+        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln
+        -c Release -o ${{env.DOTNET_ROOT}}/publicreportingapi
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3

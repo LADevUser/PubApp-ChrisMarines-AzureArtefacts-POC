@@ -64,7 +64,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: .net-app
-          
+
       - name: Azure authentication
       	uses: azure/login@v1
       	with:

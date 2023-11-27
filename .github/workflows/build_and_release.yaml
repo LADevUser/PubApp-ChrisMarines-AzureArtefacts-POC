@@ -49,7 +49,13 @@ jobs:
         run: dotnet build PublicServiceReportAPI/PublicServiceReportAPI.sln --configuration 		Release
 
       - name: dotnet publish
-        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln -c Release --property PublishDir='${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln -c Release --property:PublishDir='${{env.DOTNET_ROOT}}/publicreportingapi'
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/publicreportingapi
 
   deploy:
     runs-on: ubuntu-latest
@@ -59,6 +65,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
       - name: Azure authentication
         uses: azure/login@v1
         with:
@@ -70,5 +81,5 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: /home/runner/work/PubApp-ChrisMarines-AzureArtefacts-POC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/PublicServiceReportAPI.WebApi/myapp/
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 

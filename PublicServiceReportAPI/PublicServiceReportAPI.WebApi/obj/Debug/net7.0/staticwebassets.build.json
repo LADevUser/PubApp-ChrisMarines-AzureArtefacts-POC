@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "lp+W6G3phUA5JGhTg2JYuG/G41Zh01fyJOTvrziXoAQ=",
+  "Source": "PublicServiceReportAPI.WebApi",
+  "BasePath": "_content/PublicServiceReportAPI.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

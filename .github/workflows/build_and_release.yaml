@@ -26,6 +26,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      	with: 
+      	  repository: ${{ github.event.push.head.repo.full_name }}
+      	  path: 'webapps-deploy'
+      	  ref: ${{ github.event.push.head.ref }}
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3

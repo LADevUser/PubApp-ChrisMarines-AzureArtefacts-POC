@@ -49,7 +49,7 @@ jobs:
         run: dotnet build PublicServiceReportAPI/PublicServiceReportAPI.sln --configuration 		Release
 
       - name: dotnet publish
-        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln -c Release --property PublishDir='${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
 
   deploy:
     runs-on: ubuntu-latest

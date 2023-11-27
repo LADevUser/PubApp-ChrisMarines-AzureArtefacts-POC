@@ -28,7 +28,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
         with:
-          repository: PubApp-ChrisMarines-AzureArtefacts-POC
+          repository: LADevUser/PubApp-ChrisMarines-AzureArtefacts-POC
           path: 'webapps-deploy'
           ref: 'master'
 

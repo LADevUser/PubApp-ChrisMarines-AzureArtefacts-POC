@@ -26,11 +26,11 @@ jobs:
 
     steps:
       - name: Check out code
-      	uses: actions/checkout@v4
-      	with: 
-      	  repository: PubApp-ChrisMarines-AzureArtefacts-POC
-      	  path: 'webapps-deploy'
-      	  ref: 'master'
+        uses: actions/checkout@v4
+        with:
+          repository: PubApp-ChrisMarines-AzureArtefacts-POC
+          path: 'webapps-deploy'
+          ref: 'master'
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3

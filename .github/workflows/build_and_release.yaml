@@ -49,7 +49,7 @@ jobs:
         run: dotnet build PublicServiceReportAPI/PublicServiceReportAPI.sln --configuration 		Release
 
       - name: dotnet publish
-        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln -c Release -o ${{env.DOTNET_ROOT}}/publicreportingapi
+        run: dotnet publish PublicServiceReportAPI/PublicServiceReportAPI.sln -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -81,5 +81,5 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.DOTNET_ROOT }}/publicreportingapi
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
 

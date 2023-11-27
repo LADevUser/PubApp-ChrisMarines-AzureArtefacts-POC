@@ -11,7 +11,7 @@ name: Build and deploy ASP.Net Core app to an Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: cmreportingserviceapi   # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: 'PublicServiceReportAPI/PublicServiceReportAPI.WebApi'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: '/home/runner/work/PubApp-ChrisMarines-AzureArtefacts-POC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/PublicServiceReportAPI.WebApi/bin/Release/net7.0/'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_ROOT: '.' #Set the dotnet root
   DOTNET_VERSION: '7.0'                 # set this to the .NET Core version to use
 

@@ -70,5 +70,5 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+          package: /home/runner/work/PubApp-ChrisMarines-AzureArtefacts-POC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/PublicServiceReportAPI.WebApi/myapp/
 

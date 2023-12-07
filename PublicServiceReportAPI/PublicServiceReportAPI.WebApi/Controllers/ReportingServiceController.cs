@@ -26,20 +26,22 @@ namespace PublicServiceReportAPI.WebApi.Controllers
             _telemetryClient = telemetryClient;
         }
 
-        [Route("shipinformationsingle", Name = "01. ShipInformationSingle")]
+        [Route("logabstractreport", Name = "01. LogAbstractReport")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task <IActionResult> CreateCustomerInformationSingle([FromBody] ReportingServiceInformation shipreporting)
+        public async Task <IActionResult> CreateLogAbstractReport([FromBody] LogAbstractReportingInformation logabstractreport)
         {
-                    var queueCustomerOrder = _storageProvider.GetQueue("reporting-queue");
-                    var tasks = new List<Task>();
-                    var payload = _mapper.Map<CanonicalReportingServiceInformation>(shipreporting);
-                    payload.MessageType = "ShipLogInformationSingle";
+                    var tasks = new List<Task>();    
+                    
+                    var payload = _mapper.Map<CanonicalLogAbstractReportingInformation>(logabstractreport);
+                    payload.MessageType = "LogAbstractReport";
+                    payload.reportingdate = DateTime.UtcNow;
 
                     var json = await submitAsTempBlob(payload.SerializeJson());
 
+                    var queueCustomerOrder = _storageProvider.GetQueue("reporting-queue");
                     tasks.Add(queueCustomerOrder.SendMessageAsync(json));
 
 
@@ -55,20 +57,21 @@ namespace PublicServiceReportAPI.WebApi.Controllers
             return new OkResult();
         }
 
-        [Route("shipinformationbatch", Name = "02. ShipInformationBatch")]
+        [Route("bunkerreporting", Name = "02. BunkerReport")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task <IActionResult> CreateCustomerInformationBatch([FromBody] List<ReportingServiceInformation> ShipReportBatch)
+        public async Task <IActionResult> CreateBunkerReport([FromBody] List<BunkerReportIngInformation> bunkerreporting)
         {
-            var queueCustomerOrder = _storageProvider.GetQueue("customerinformationbatchqueue");
+            var queueCustomerOrder = _storageProvider.GetQueue("reporting-queue");
             var tasks = new List<Task>();
 
-                foreach (var shiprep in ShipReportBatch)
+                foreach (var bunkerreport in bunkerreporting)
                 {
-                    var payload = _mapper.Map<CanonicalReportingServiceInformation>(shiprep);
-                    payload.MessageType = "ShipLogInformationBatch";
+                    var payload = _mapper.Map<CanonicalBunkerReportingInformation>(bunkerreport);
+                    payload.MessageType = "BunkerReport";
+                    payload.reportingdate = DateTime.UtcNow;
                     var json = await determineSubmissionType(payload.SerializeJson());
 
                     tasks.Add(queueCustomerOrder.SendMessageAsync(json));

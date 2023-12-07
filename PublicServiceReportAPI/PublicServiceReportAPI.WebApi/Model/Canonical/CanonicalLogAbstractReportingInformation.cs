@@ -4,7 +4,7 @@ using System;
 
 namespace PublicServiceReportAPI.WebApi.Model.Canonical
 {
-    public class CanonicalReportingServiceInformation
+    public class CanonicalLogAbstractReportingInformation
     {
         public long IMO { get; set; }
         public string Date_UTC { get; set; }

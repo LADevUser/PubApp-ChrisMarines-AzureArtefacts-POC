@@ -8,7 +8,10 @@ namespace PublicServiceReportAPI.WebApi.Mapping
     {
         public AutoMapping()
         {
-            CreateMap<ReportingServiceInformation, CanonicalReportingServiceInformation>();
+            CreateMap<LogAbstractReportingInformation, CanonicalLogAbstractReportingInformation>();
+
+            CreateMap<BunkerReportIngInformation, CanonicalBunkerReportingInformation>();
+                
         }
     }   
 

@@ -1,23 +1,11 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
 using System;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
-namespace PublicServiceReportAPI.WebApi.Model.Public
+namespace PublicServiceReportAPI.WebApi.Model.Subclasses
 {
-    public class ReportingServiceInformation
+    public class Voyage
     {
-        [Required]
-        [JsonProperty(Required = Required.DisallowNull)]
-        public long IMO { get; set; }
-
-        [Required]
-        [JsonProperty(Required = Required.DisallowNull)]
-        public string Date_UTC { get; set; }
-
-        [Required]
-        [JsonProperty(Required = Required.DisallowNull)]
-        public string Time_UTC { get; set; }
-
         [MaxLength(5)]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Voyage_From { get; set; }
@@ -37,9 +25,5 @@ namespace PublicServiceReportAPI.WebApi.Model.Public
         [MaxLength(100)]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Offhire_Reasons { get; set; }
-
-        [MaxLength(30)]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Event { get; set; }
     }
 }

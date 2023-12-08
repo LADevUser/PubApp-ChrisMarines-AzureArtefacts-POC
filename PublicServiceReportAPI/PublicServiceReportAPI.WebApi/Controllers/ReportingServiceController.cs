@@ -41,7 +41,7 @@ namespace PublicServiceReportAPI.WebApi.Controllers
 
                     var json = await submitAsTempBlob(payload.SerializeJson());
 
-                    var queueCustomerOrder = _storageProvider.GetQueue("reporting-queue");
+                    var queueCustomerOrder = _storageProvider.GetQueue("logreports");
                     tasks.Add(queueCustomerOrder.SendMessageAsync(json));
 
 
@@ -64,13 +64,45 @@ namespace PublicServiceReportAPI.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task <IActionResult> CreateBunkerReport([FromBody] List<BunkerReportIngInformation> bunkerreporting)
         {
-            var queueCustomerOrder = _storageProvider.GetQueue("reporting-queue");
+            var queueCustomerOrder = _storageProvider.GetQueue("bunkerreports");
             var tasks = new List<Task>();
 
                 foreach (var bunkerreport in bunkerreporting)
                 {
                     var payload = _mapper.Map<CanonicalBunkerReportingInformation>(bunkerreport);
                     payload.MessageType = "BunkerReport";
+                    payload.reportingdate = DateTime.UtcNow;
+                    var json = await determineSubmissionType(payload.SerializeJson());
+
+                    tasks.Add(queueCustomerOrder.SendMessageAsync(json));
+
+                }
+
+                await Task.WhenAll(tasks);
+
+                if (tasks.Any(t => t.IsFaulted))
+                {
+                    _telemetryClient.TrackException(tasks.First(t => t.IsFaulted).Exception, new Dictionary<string, string> { { "WriteToInboundQueue", "1" } });
+                }
+
+
+            return new OkResult();
+        }
+
+        [Route("cargo nomination", Name = "02. CargoNomination")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task <IActionResult> CreateCargoNominationReport([FromBody] List<CargoNominationReportIngInformation> cargonominationreporting)
+        {
+            var queueCustomerOrder = _storageProvider.GetQueue("dailymeasure");
+            var tasks = new List<Task>();
+
+                foreach (var cargonominationreport in cargonominationreporting)
+                {
+                    var payload = _mapper.Map<CanonicalCargoNominationReportingInformation>(cargonominationreport);
+                    payload.MessageType = "CargoNomination";
                     payload.reportingdate = DateTime.UtcNow;
                     var json = await determineSubmissionType(payload.SerializeJson());
 

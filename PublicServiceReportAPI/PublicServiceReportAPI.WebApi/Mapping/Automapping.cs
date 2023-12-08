@@ -11,6 +11,8 @@ namespace PublicServiceReportAPI.WebApi.Mapping
             CreateMap<LogAbstractReportingInformation, CanonicalLogAbstractReportingInformation>();
 
             CreateMap<BunkerReportIngInformation, CanonicalBunkerReportingInformation>();
+
+            CreateMap<CargoNominationReportIngInformation, CanonicalCargoNominationReportingInformation>();
                 
         }
     }   

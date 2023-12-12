@@ -14,13 +14,15 @@
         "outputPath": "/home/developer/CM-SC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/PublicServiceReportAPI.WebApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/home/developer/CM-SC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/nuget.config",
           "/home/developer/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/CloudHeart/_packaging/larsahlfors77/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -73,6 +75,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "OVDInterfaceModelPackage": {
+              "target": "Package",
+              "version": "[1.0.6, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

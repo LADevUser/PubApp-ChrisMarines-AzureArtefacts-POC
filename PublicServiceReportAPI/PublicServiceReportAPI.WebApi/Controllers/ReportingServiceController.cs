@@ -4,8 +4,8 @@ using AutoMapper;
 using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
 using PublicServiceReportAPI.WebApi.interfaces;
-using PublicServiceReportAPI.WebApi.Model.Public;
-using PublicServiceReportAPI.WebApi.Model.Canonical;
+using OVDInterfaceModelPackage.Model.Public.OVDReportingApi.MainModels;
+using OVDInterfaceModelPackage.Model.Internal.Canonical.OVDReportingApi.MainModels;
 
 
 namespace PublicServiceReportAPI.WebApi.Controllers
@@ -35,7 +35,7 @@ namespace PublicServiceReportAPI.WebApi.Controllers
         {
                     var tasks = new List<Task>();    
                     
-                    var payload = _mapper.Map<CanonicalLogAbstractReportingInformation>(logabstractreport);
+                    var payload = _mapper.Map<LogAbstractReportingInformationCanonical>(logabstractreport);
                     payload.MessageType = "LogAbstractReport";
                     payload.reportingdate = DateTime.UtcNow;
 
@@ -69,7 +69,7 @@ namespace PublicServiceReportAPI.WebApi.Controllers
 
                 foreach (var bunkerreport in bunkerreporting)
                 {
-                    var payload = _mapper.Map<CanonicalBunkerReportingInformation>(bunkerreport);
+                    var payload = _mapper.Map<BunkerReportIngInformationCanonical>(bunkerreport);
                     payload.MessageType = "BunkerReport";
                     payload.reportingdate = DateTime.UtcNow;
                     var json = await determineSubmissionType(payload.SerializeJson());
@@ -87,39 +87,7 @@ namespace PublicServiceReportAPI.WebApi.Controllers
 
 
             return new OkResult();
-        }
-
-        [Route("cargo nomination", Name = "02. CargoNomination")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task <IActionResult> CreateCargoNominationReport([FromBody] List<CargoNominationReportIngInformation> cargonominationreporting)
-        {
-            var queueCustomerOrder = _storageProvider.GetQueue("dailymeasure");
-            var tasks = new List<Task>();
-
-                foreach (var cargonominationreport in cargonominationreporting)
-                {
-                    var payload = _mapper.Map<CanonicalCargoNominationReportingInformation>(cargonominationreport);
-                    payload.MessageType = "CargoNomination";
-                    payload.reportingdate = DateTime.UtcNow;
-                    var json = await determineSubmissionType(payload.SerializeJson());
-
-                    tasks.Add(queueCustomerOrder.SendMessageAsync(json));
-
-                }
-
-                await Task.WhenAll(tasks);
-
-                if (tasks.Any(t => t.IsFaulted))
-                {
-                    _telemetryClient.TrackException(tasks.First(t => t.IsFaulted).Exception, new Dictionary<string, string> { { "WriteToInboundQueue", "1" } });
-                }
-
-
-            return new OkResult();
-        }
+        }        
 
         private async Task<string> submitAsTempBlob(string json)
         {

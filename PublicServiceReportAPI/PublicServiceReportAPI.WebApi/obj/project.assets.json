@@ -895,6 +895,18 @@
           }
         }
       },
+      "OVDInterfaceModelPackage/1.0.6": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net7.0/OVDInterfaceModelPackage.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/OVDInterfaceModelPackage.dll": {}
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "type": "package",
         "dependencies": {
@@ -2683,6 +2695,17 @@
         "packageIcon.png"
       ]
     },
+    "OVDInterfaceModelPackage/1.0.6": {
+      "sha512": "rma+aqoYO1EcoqpwGIDA0Sq0BOYQomrjK4+98IsCw6xNu95MoPuIX5BlJEUPMNSJANaLW+lPYcng3sKmKn3A/A==",
+      "type": "package",
+      "path": "ovdinterfacemodelpackage/1.0.6",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net7.0/OVDInterfaceModelPackage.dll",
+        "ovdinterfacemodelpackage.1.0.6.nupkg.sha512",
+        "ovdinterfacemodelpackage.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.5.0": {
       "sha512": "FK05XokgjgwlCI6wCT+D4/abtQkL1X1/B9Oas6uIwHFmYrIO9WUD5aLC9IzMs9GnHfUXOtXZ2S43gN1mhs5+aA==",
       "type": "package",
@@ -4325,6 +4348,7 @@
       "Microsoft.AspNetCore.OpenApi >= 7.0.14",
       "Microsoft.Extensions.Configuration >= 8.0.0",
       "Newtonsoft.Json >= 13.0.3",
+      "OVDInterfaceModelPackage >= 1.0.6",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -4341,13 +4365,15 @@
       "outputPath": "/home/developer/CM-SC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/PublicServiceReportAPI.WebApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
+        "/home/developer/CM-SC/PubApp-ChrisMarines-AzureArtefacts-POC/PublicServiceReportAPI/nuget.config",
         "/home/developer/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/CloudHeart/_packaging/larsahlfors77/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
@@ -4400,6 +4426,10 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+          },
+          "OVDInterfaceModelPackage": {
+            "target": "Package",
+            "version": "[1.0.6, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
